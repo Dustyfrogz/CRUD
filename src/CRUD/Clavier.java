@@ -98,20 +98,18 @@ public class Clavier {
 	 * @return
 	 */
 	public static int lireInt(int debut, int fin)
-	// lecture d'un int
 	{
-		int n = debut-1;
-		// valeur a lire
-		
+		int n = debut-1;		
 		try {
 			String ligne_lue = lireString();
 			n = Integer.parseInt(ligne_lue);
 			if (n<debut||n>fin) {
+				System.out.println("******** ERREUR le chiffre doit être compris entre "+debut+ " et "+fin+" ********");
 				return (debut-1);
+			}else {			
 			}
 		} catch (NumberFormatException err) {
-			System.out.println("*** Erreur de donnee ***");
-//			System.exit(0);
+			System.out.println("******* ERREUR la valeur n'est pas un nombre entier *******");
 			return (debut-1);
 		}
 		return n;
