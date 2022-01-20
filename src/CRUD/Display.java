@@ -1,5 +1,8 @@
 package CRUD;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class Display {
 
 	public static void main(String[] args) {
@@ -64,22 +67,16 @@ public class Display {
 	public static void actionDragon(int nbAction) {
 		switch (nbAction) {
 		case 1:
-			Querydragon.create();
+			createDragon();
 			break;
 		case 2:
-			if(Querydragon.getCounter()==0) { // if db is empty
-				System.out.println("Au revoir !!!");
-				MyConnexion.closeConnection();
-				System.exit(0);
-			}else {
-			Querydragon.delete(dragonChoice());
-			break;
-			}
+		case2(); // methode in fonction if the db is empty or not
+		break;
 		case 3:
-			Querydragon.update(null, null);
+			displayChoiceUpdateDragon(dragonChoice());
 			break;
 		case 4:
-			displayRead();
+			displayRead(dragonChoice());
 			break;
 		case 5:
 			System.out.println("Au revoir !!!");
@@ -88,15 +85,73 @@ public class Display {
 		}
 	}
 	
+	/**
+	 * method for choice actionDragon if db is empty
+	 */
+	public static void case2() {
+		if(Querydragon.getCounter()==0) { // if db is empty
+			System.out.println("Au revoir !!!");
+			MyConnexion.closeConnection();
+			System.exit(0);
+		}else {
+			Querydragon.delete(dragonChoice());
+			}
+		}
 	
+	/**
+	 * display the dragon's list then allow to choice in the list
+	 * @return choice (dragonid)
+	 */
 	public static int dragonChoice() {
 		System.out.println("Choisissez le dragon dans la liste en choisissant son numéro");
 		Querydragon.readAll();
 		int choice=Clavier.lireInt(1, Querydragon.getCounter());
 		return choice;
 	}
-	public static void displayRead() {
-		Querydragon.read();
+	
+	/**
+	 * display the dragon
+	 * @param dragonId4
+	 */
+	public static void displayRead(int dragonId) {
+		Querydragon.read(dragonId);
+		displayAllDragon();
 		
 	}
-}
+	
+	/**
+	 * create a dragon
+	 */
+	public static void createDragon() {
+		Querydragon.create();
+		displayAllDragon();
+	}
+	
+	/**
+	 * display choice of update for the table dragon
+	 * then update
+	 * then display all dragons
+	 * @param idDragon
+	 */
+	public static void displayChoiceUpdateDragon(int idDragon) {
+		System.out.println("Choisissez un attribut du dragon à modifier par son numéros: ");
+		try {
+			Querydragon.nameCol();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		int readInt=Clavier.lireInt(1, Querydragon.getCounter());
+		ArrayList<String> colDragon= Querydragon.getTab();
+		String col=colDragon.get(readInt);
+		System.out.println("Entrer la nouvelle valeur de "+col+" :");
+		String newValue=Clavier.lireString();
+		System.out.println(newValue);
+		Querydragon.update(col,newValue,idDragon);
+		displayActionDragon();
+	}
+	
+	
+	
+	
+	}
+
