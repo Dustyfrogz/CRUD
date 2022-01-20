@@ -36,6 +36,7 @@ public class Querydragon extends MyConnexion {
 				Object[] row = new Object[] { resultat.getInt("id_dragon"), resultat.getString("dragon") };
 				System.out.println(Arrays.toString(row));
 			}
+			// test
 //			while (resultat.next()) {
 //				Dragons ing = new Dragons();
 //				ing.setId(resultat.getInt("id_dragon"));
