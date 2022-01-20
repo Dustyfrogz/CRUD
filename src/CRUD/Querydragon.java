@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class QueryIngredient extends MyConnexion {
+public class Querydragon extends MyConnexion {
 
 	/**
 	 * Ici on test
@@ -17,7 +17,7 @@ public class QueryIngredient extends MyConnexion {
 		openConnection();
 //		readAll();
 //		create();
-		update("dddd", "merdique JB est update");
+		//update("dddd", "merdique JB est update");
 //		deleteByNamePrepared("merde");
 		readAll();
 		closeConnection();
@@ -29,38 +29,29 @@ public class QueryIngredient extends MyConnexion {
 	public static void readAll() {
 		try {
 			Statement declaration = accessDataBase.createStatement();
-			String query = "SELECT id, nom FROM ingredients;";
+			String query = "SELECT * FROM dragons;";
 			ResultSet resultat = declaration.executeQuery(query);
 			/* Récupération des données */
-//			while (resultat.next()) {
-//				Object[] row = new Object[] { resultat.getInt("id"), resultat.getString("nom") };
-//				System.out.println(Arrays.toString(row));
-//			}
 			while (resultat.next()) {
-				Dragons ing = new Dragons();
-				ing.setId(resultat.getInt("id"));
-				ing.setDragon(resultat.getString("nom"));
-				System.out.println(ing.toString());
+				Object[] row = new Object[] { resultat.getInt("id_dragon"), resultat.getString("dragon") };
+				System.out.println(Arrays.toString(row));
 			}
+//			while (resultat.next()) {
+//				Dragons ing = new Dragons();
+//				ing.setId(resultat.getInt("id_dragon"));
+//				ing.setDragon(resultat.getString("dragon"));
+//				ing.setSexe(resultat.getString("sexe"));
+//				ing.setLongueur(resultat.getInt("longueur"));
+//				ing.setNombreEcailles(resultat.getInt("nombre_ecailles"));
+//				ing.setCracheFeu(resultat.getString("crache_feu"));
+//				ing.setComportementAmoureux(resultat.getString("comportement_amoureux"));
+//				System.out.println(ing.toString());
+//			}
 		} catch (Exception e) {
 			System.err.println("Erreur d'affichage d'ing: " + e.getMessage());
 		}
 	}
 
-//	public static void create(String ingredient) {
-//		try {
-//			Statement declaration = accessDataBase.createStatement();
-//			String query = "INSERT INTO `ingredients`(`nom`) " + "VALUES ('" + ingredient + "')";
-//			int executeUpdate = declaration.executeUpdate(query);
-//			if (executeUpdate == 1) {
-//				System.out.println("insertion ingredient effectué ! ");
-//			} else {
-//				System.out.println("insertion ingredient non effectue");
-//			}
-//		} catch (Exception e) {
-//			System.err.println("Erreur d'insertion ingredient: " + e.getMessage());
-//		}
-//	}
 
 	/**
 	 * Création d'un nouvel ingrédient

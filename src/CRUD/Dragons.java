@@ -53,12 +53,12 @@ public void setNombreEcailles(int nombreEcailles) {
 }
 
 
-public boolean isCracheFeu() {
+public String GetCracheFeu() {
 	return cracheFeu;
 }
 
 
-public void setCracheFeu(boolean cracheFeu) {
+public void setCracheFeu(String cracheFeu) {
 	this.cracheFeu = cracheFeu;
 }
 
@@ -77,14 +77,14 @@ String dragon;
 String sexe;
 int longueur;
 int nombreEcailles;
-boolean cracheFeu;
+String cracheFeu;
 String comportementAmoureux;
 
 
 
 @Override
 public String toString() {
-	return "Le dragon [id=" + id + ", nom=" + dragon + ", sexe= "+sexe + "longueur :" + longueur + 
+	return "Le dragon [id=" + id + ", nom=" + dragon + ", sexe= "+sexe + ", longueur :" + longueur + 
 			" Nombre Ecailles : "+ nombreEcailles + " ,crache du Feu : " + cracheFeu + " ,comportement amoureux : "+ comportementAmoureux+"]";
 }
 }
