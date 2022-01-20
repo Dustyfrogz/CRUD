@@ -1,152 +1,174 @@
 package CRUD;
 
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Querydragon extends MyConnexion {
+	private static int counter = 0;
+	private static ArrayList<String> tab;
 
-	/**
-	 * Ici on test
-	 * 
-	 * @param args the command line arguments
-	 */
-	public static void main(String[] args) {
-		openConnection();
-//		readAll();
-//		create();
-		//update("dddd", "merdique JB est update");
-//		deleteByNamePrepared("merde");
-		readAll();
-		closeConnection();
+	static ArrayList<String> getTab() {
+		return tab;
 	}
 
+	void setTab(ArrayList<String> tab) {
+		this.tab = tab;
+	}
+
+	static int getCounter() {
+		return counter;
+	}
+
+	static void setCounter(int counter) {
+		Querydragon.counter = counter;
+	}
+
+	
+
 	/**
-	 * Action de lire les tous les ingrèdients
+	 * read all the dragon in the list
 	 */
 	public static void readAll() {
 		try {
 			Statement declaration = accessDataBase.createStatement();
-			String query = "SELECT * FROM dragons;";
+			String query = "SELECT id_dragon,dragon FROM dragons;";
 			ResultSet resultat = declaration.executeQuery(query);
 			/* Récupération des données */
 			while (resultat.next()) {
-				Object[] row = new Object[] { resultat.getInt("id_dragon"), resultat.getString("dragon") };
+				Object[] row = new Object[] { resultat.getInt("id_dragon"), resultat.getString("dragon")};
 				System.out.println(Arrays.toString(row));
+				setCounter(getCounter() + 1); //
 			}
-			// test
-//			while (resultat.next()) {
-//				Dragons ing = new Dragons();
-//				ing.setId(resultat.getInt("id_dragon"));
-//				ing.setDragon(resultat.getString("dragon"));
-//				ing.setSexe(resultat.getString("sexe"));
-//				ing.setLongueur(resultat.getInt("longueur"));
-//				ing.setNombreEcailles(resultat.getInt("nombre_ecailles"));
-//				ing.setCracheFeu(resultat.getString("crache_feu"));
-//				ing.setComportementAmoureux(resultat.getString("comportement_amoureux"));
-//				System.out.println(ing.toString());
-//			}
+
 		} catch (Exception e) {
 			System.err.println("Erreur d'affichage d'ing: " + e.getMessage());
 		}
 	}
 
-
 	/**
-	 * Création d'un nouvel ingrédient
 	 * 
-	 * @param ingredient
-	 * @return // true si insertion réussite
+	 * @param dragonId
+	 * @return
 	 */
-
-	public static boolean create() {
-		String response = "oui";
-		boolean flag=true;
-		while (response.equals("oui")) {
-
-			System.out.println("Voulez-vous saisir un ingredient?");
-			response = Clavier.lireOuiNon();
-			if (response!="oui") {
-				response="non";
+	public static boolean read(int dragonId) {
+		boolean flag = true;
+		try {
+			// Statement declaration = accessDataBase.createStatement();
+			String query = "Select * FROM dragons WHERE id_dragon = ?";
+			PreparedStatement declaration = accessDataBase.prepareStatement(query);
+			declaration.setInt(1, dragonId);
+			ResultSet result = declaration.executeQuery();
+			//flag = (result.equals(1));
+			while (result.next()) {
+				Object[] row = new Object[] { result.getInt("id_dragon"), result.getString("dragon"),
+						result.getString("sexe"),result.getInt("longueur"),result.getInt("nombre_ecailles"),
+						result.getString("crache_feu"),result.getString("comportement_amoureux")};
+				System.out.println(Arrays.toString(row));
 			}
-			
-			flag = false;
-			try {
-				//Statement declaration = accessDataBase.createStatement();
-				System.out.println("entrer le nom de l'ingredient :");
-				String lecture = Clavier.lireString();
-				String query = "INSERT INTO ingredients (nom) VALUES (?)";
-				PreparedStatement declaration = accessDataBase.prepareStatement(query);		
-				declaration.setString(1, lecture);
-				int executeUpdate = declaration.executeUpdate();
-				flag = (executeUpdate == 1);
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.err.println("Erreur d'insertion ingredient: " + e.getMessage());
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Erreur d'insertion dragon: " + e.getMessage());
 		}
-		
 		return flag;
 	}
 
+	/**
+	 * Création d'un nouveau dragon
+	 * 
+	 * @param dragon
+	 * @return // true si insertion réussite
+	 */
+	public static boolean create() {
+		boolean flag = true;
+		try {
+			// Statement declaration = accessDataBase.createStatement();
+			System.out.println("entrer le nom du dragon : ");
+			String lecture = Clavier.lireString();
+			String query = "INSERT INTO dragons (dragon) VALUES (?)";
+			PreparedStatement declaration = accessDataBase.prepareStatement(query);
+			declaration.setString(1, lecture);
+			int executeUpdate = declaration.executeUpdate();
+			flag = (executeUpdate == 1);
+			System.out.println("le dragon " + lecture + " a été créé.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Erreur d'insertion dragon: " + e.getMessage());
+		}
+		return flag;
+	}
+
+	/**
+	 * delete a dragon to the db
+	 * @param id
+	 * @return
+	 */
 	public static boolean delete(int id) {
 		boolean success = false;
 		try {
-			Statement declaration = accessDataBase.createStatement();
+			// Statement declaration = accessDataBase.createStatement();
 			/* Requete */
-			String query = "DELETE FROM `ingredients` WHERE `id`= " + id + ";";
+			String query = "DELETE FROM dragons WHERE id_dragon = ?";
+			PreparedStatement declaration = accessDataBase.prepareStatement(query);
+			declaration.setInt(1, id);
 			/* Exécution d'une requête de lecture */
-			int executeUpdate = declaration.executeUpdate(query);
+			int executeUpdate = declaration.executeUpdate();
 			success = (executeUpdate == 1);
+			System.out.println("*************************");
+			System.out.println("Tu as supprimé le dragon ");
 		} catch (SQLException e) {
-			System.err.println("Erreur suppression ingredient: " + e.getMessage());
+			System.err.println("Erreur suppression du dragon : " + e.getMessage());
 		}
 		return success;
 	}
-
-	public static boolean deleteByName(String nom) {
-		boolean success = false;
-		try {
-			Statement declaration = accessDataBase.createStatement();
-			String query = "DELETE FROM `ingredients` WHERE `nom`= \"" + nom + "\";";
-			int executeUpdate = declaration.executeUpdate(query);
-			success = (executeUpdate == 1);
-		} catch (SQLException e) {
-			System.err.println("Erreur suppression ingredient: " + e.getMessage());
-		}
-		return success;
-	}
-	
-	public static boolean deleteByNamePrepared(String nom) {
-		boolean success = false;
-		try {
-		String query = "DELETE FROM ingredients WHERE nom = ?";
-		PreparedStatement declaration = accessDataBase.prepareStatement(query);
-		declaration.setString(1, nom);
-		int executeUpdate = declaration.executeUpdate();
-		success = (executeUpdate == 1);
-		} catch (SQLException e) {
-		System.err.println("Erreur suppression ingredient: "
-		+ e.getMessage());
-		}
-		return success;
-		}
-	
-	public static boolean update(String nom,String nom2) {
+/**
+ * update a dragon to the db
+ * @param col
+ * @param newValue
+ * @param idDragon
+ * @return
+ */
+	public static boolean update(String col,String newValue, int idDragon) {
 		boolean success=false;
 		try {
-		String query = "UPDATE ingredients SET nom = ? WHERE ingredients.nom= ?";
+		String query = "UPDATE dragons SET "+ col+" = ? WHERE dragons.id_dragon= ?";
 		PreparedStatement declaration = accessDataBase.prepareStatement(query);
-		declaration.setString(2, nom);
-		declaration.setString(1, nom2);
+		//declaration.setString(1, col);
+		declaration.setString(1, newValue);
+		declaration.setInt(2, idDragon);
 		int executeUpdate = declaration.executeUpdate();
 		success = (executeUpdate == 1);
 		} catch (SQLException e) {
-		System.err.println("Erreur update ingredient: "
+		System.err.println("Erreur update dragon: "
 		+ e.getMessage());
 		}
 		return success;
 		}
+	
+	/**
+	 * get name of column in the table dragon 
+	 * then display it
+	 * @throws SQLException
+	 */
+	public static void nameCol() throws SQLException {
+		tab=new ArrayList<>();
+		DatabaseMetaData databaseMetaData = accessDataBase.getMetaData();
+		ResultSet columns = databaseMetaData.getColumns(null,null, "dragons", null);
+		System.out.println(columns);
+		while(columns.next()) {
+		String columnName = columns.getString("COLUMN_NAME");
+		tab.add(columnName);
+		}
+		List subtab=tab.subList(8,14);
+		 //tab=tab.subList(9,14);
+		setCounter(subtab.size());
+		for (int i=0;i<subtab.size();i++) {
+		System.out.println((i+1)+" : "+subtab.get(i));
+		}
 	}
+}
