@@ -11,7 +11,7 @@ public class MyConnexion {
 		static Connection accessDataBase = null;
 
 		/**
-		 * Testons la connexion
+		 * Test the connection
 		 * 
 		 * @param args
 		 */
@@ -23,7 +23,7 @@ public class MyConnexion {
 		}
 
 		/**
-		 * Connexion à ma base de donnée NESTI
+		 * Connection to the dataBse
 		 * 
 		 * @throws SQLException
 		 */
@@ -35,15 +35,16 @@ public class MyConnexion {
 			String motDePasse = "";
 			try {
 				System.out.println("try to connect");
-				// on ajoute nos paramètres
+				// add our parameters
 				accessDataBase = DriverManager.getConnection(url, utilisateur, motDePasse);
+				
 			} catch (SQLException ex) {
 				Logger.getLogger(MyConnexion.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
 
 		/**
-		 * True si la connexion est OK
+		 * True if connection is OK
 		 *
 		 * @return
 		 */
