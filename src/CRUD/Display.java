@@ -115,7 +115,7 @@ public class Display {
 	 */
 	public static void displayRead(int dragonId) {
 		Querydragon.read(dragonId);
-		displayAllDragon();
+		displayActionDragon();
 		
 	}
 	
@@ -145,7 +145,7 @@ public class Display {
 		String col=colDragon.get(readInt);
 		System.out.println("Entrer la nouvelle valeur de "+col+" :");
 		String newValue=Keyboard.readString();
-		System.out.println(newValue);
+		Querydragon.read(idDragon);
 		Querydragon.update(col,newValue,idDragon);
 		Querydragon.read(idDragon);
 		displayActionDragon();
