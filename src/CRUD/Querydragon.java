@@ -89,7 +89,7 @@ public class Querydragon extends MyConnexion {
 		try {
 			// Statement declaration = accessDataBase.createStatement();
 			System.out.println("entrer le nom du dragon : ");
-			String lecture = Clavier.lireString();
+			String lecture = Keyboard.readString();
 			String query = "INSERT INTO dragons (dragon) VALUES (?)";
 			PreparedStatement declaration = accessDataBase.prepareStatement(query);
 			declaration.setString(1, lecture);

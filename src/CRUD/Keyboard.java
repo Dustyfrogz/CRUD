@@ -4,13 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Clavier {
+public class Keyboard {
 	/**
-	 * Methode pour lire un string au clavier de la console
-	 * @return String la ligne lue
+	 * Methodfor read a String with the console keyboard
+	 * @return String 
 	 */
-	public static String lireString()
-	// lecture d'une chaine
+	public static String readString()
 	{
 		String ligne_lue = null;
 		try {
@@ -22,12 +21,11 @@ public class Clavier {
 		}
 		return ligne_lue;
 	}
-	/** Methode pour lire string oui ou non UNIQUEMENT
+	/** Method for read "oui" or "non" only from the console
 	 * 
-	 * @return lignelue lower case si oui/non sinon null
+	 * @return lignelue lower case if oui/non if not null
 	 */
-	public static String lireOuiNon()
-	// lecture d'une chaine
+	public static String readYesOrNo()
 	{
 		String ligne_lue_brut = null;
 		String ligne_lue = null;
@@ -44,14 +42,15 @@ public class Clavier {
 		}
 		return ligne_lue;
 	}
-
-	public static float lireFloat()
-	// lecture d'un float
+/**
+ * Method for read a Float from the console
+ * @return the Float
+ */
+	public static float readFloat() 
 	{
 		float x = 0;
-		// valeur a lire
 		try {
-			String ligne_lue = lireString();
+			String ligne_lue = readString();
 			x = Float.parseFloat(ligne_lue);
 		} catch (NumberFormatException err) {
 			System.out.println("*** Erreur de donnee ***");
@@ -59,14 +58,15 @@ public class Clavier {
 		}
 		return x;
 	}
-
-	public static double lireDouble()
-	// lecture d'un double
+/**
+ * Method for read a Double from the console
+ * @return the Double
+ */
+	public static double readDouble()
 	{
 		double x = 0;
-		// valeur a lire
 		try {
-			String ligne_lue = lireString();
+			String ligne_lue = readString();
 			x = Double.parseDouble(ligne_lue);
 		} catch (NumberFormatException err) {
 			System.out.println("*** Erreur de donnee ***");
@@ -74,14 +74,16 @@ public class Clavier {
 		}
 		return x;
 	}
-
-	public static int lireInt()
-	// lecture d'un int
+/**
+ * Method for read a Int from the console
+ * @return the Int
+ */
+	public static int readInt()
 	{
 		int n = 0;
-		// valeur a lire
+
 		try {
-			String ligne_lue = lireString();
+			String ligne_lue = readString();
 			n = Integer.parseInt(ligne_lue);
 		} catch (NumberFormatException err) {
 			System.out.println("*** Erreur de donnee ***");
@@ -91,26 +93,25 @@ public class Clavier {
 	}
 	
 	/**
-	 * Methode pour lire un int compris entre int debut et fin compris
-	 * sinon return debut-1
-	 * @param debut
-	 * @param fin
-	 * @return
+	 * Method for read a int from the console with a range, values include
+	 * @param start
+	 * @param end
+	 * @return the int if not start-1
 	 */
-	public static int lireInt(int debut, int fin)
+	public static int readInt(int start, int end)
 	{
-		int n = debut-1;		
+		int n = start-1;		
 		try {
-			String ligne_lue = lireString();
+			String ligne_lue = readString();
 			n = Integer.parseInt(ligne_lue);
-			if (n<debut||n>fin) {
-				System.out.println("******** ERREUR le chiffre doit être compris entre "+debut+ " et "+fin+" ********");
-				return (debut-1);
+			if (n<start||n>end) {
+				System.out.println("******** ERREUR le chiffre doit être compris entre "+start+ " et "+end+" ********");
+				return (start-1);
 			}else {			
 			}
 		} catch (NumberFormatException err) {
 			System.out.println("******* ERREUR la valeur n'est pas un nombre entier *******");
-			return (debut-1);
+			return (start-1);
 		}
 		return n;
 	}

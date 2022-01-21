@@ -37,7 +37,7 @@ public class Display {
 			System.out.println("Quelle action voulez-vous effectué ?( entrer le chiffre correspondant)");
 			System.out.println("1: créer un dragon");
 			System.out.println("2: quitter le programme");
-			choice = Clavier.lireInt(1, 2);
+			choice = Keyboard.readInt(1, 2);
 		} while (choice == 0);
 		actionDragon(choice);
 	}
@@ -56,7 +56,7 @@ public class Display {
 			System.out.println("3: modifier le paramètres d'un dragon");
 			System.out.println("4: lire toute les infos d'un dragon");
 			System.out.println("5: quitter le programme");
-			choice = Clavier.lireInt(1, 5);
+			choice = Keyboard.readInt(1, 5);
 		} while (choice == 0);
 		actionDragon(choice);
 	}
@@ -105,7 +105,7 @@ public class Display {
 	public static int dragonChoice() {
 		System.out.println("Choisissez le dragon dans la liste en choisissant son numéro");
 		Querydragon.readAll();
-		int choice=Clavier.lireInt(1, Querydragon.getCounter());
+		int choice=Keyboard.readInt(1, Querydragon.getCounter());
 		return choice;
 	}
 	
@@ -140,11 +140,11 @@ public class Display {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		int readInt=Clavier.lireInt(1, Querydragon.getCounter());
+		int readInt=Keyboard.readInt(1, Querydragon.getCounter());
 		ArrayList<String> colDragon= Querydragon.getTab();
 		String col=colDragon.get(readInt);
 		System.out.println("Entrer la nouvelle valeur de "+col+" :");
-		String newValue=Clavier.lireString();
+		String newValue=Keyboard.readString();
 		System.out.println(newValue);
 		Querydragon.update(col,newValue,idDragon);
 		displayActionDragon();
