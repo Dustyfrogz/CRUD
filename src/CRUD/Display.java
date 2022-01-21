@@ -147,7 +147,8 @@ public class Display {
 		String newValue=Keyboard.readString();
 		System.out.println(newValue);
 		Querydragon.update(col,newValue,idDragon);
-		displayAllDragon();
+		Querydragon.read(idDragon);
+		displayActionDragon();
 	}
 	/**
 	 * methode for delete a dragon int the db
