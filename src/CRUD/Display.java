@@ -61,7 +61,7 @@ public class Display {
 		actionDragon(choice);
 	}
 /**
- * launch a methode following the parameter
+ * launch a method following the parameter meaning the action to perform
  * @param nbAction
  */
 	public static void actionDragon(int nbAction) {
@@ -94,7 +94,7 @@ public class Display {
 			MyConnexion.closeConnection();
 			System.exit(0);
 		}else {
-			Querydragon.delete(dragonChoice());
+			dragonDelete();
 			}
 		}
 	
@@ -150,7 +150,10 @@ public class Display {
 		displayActionDragon();
 	}
 	
-	
+	public static void dragonDelete() {
+		Querydragon.delete(dragonChoice());
+		displayAllDragon();
+	}
 	
 	
 	}
