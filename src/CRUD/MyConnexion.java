@@ -16,9 +16,8 @@ public class MyConnexion {
 		 * @throws SQLException
 		 */
 		public static void openConnection() {
-			/* Parametres de connexion */
+			/* Parameters for the connection */
 			String url = "jdbc:mysql://127.0.0.1/dragon2";
-			// nesti = nom de ma bdd
 			String utilisateur = "root";
 			String motDePasse = "";
 			try {
