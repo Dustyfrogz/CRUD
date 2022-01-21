@@ -11,18 +11,6 @@ public class MyConnexion {
 		static Connection accessDataBase = null;
 
 		/**
-		 * Test the connection
-		 * 
-		 * @param args
-		 */
-		public static void main(String[] args) {
-			openConnection();
-			testConnection();
-			closeConnection();
-
-		}
-
-		/**
 		 * Connection to the dataBse
 		 * 
 		 * @throws SQLException
