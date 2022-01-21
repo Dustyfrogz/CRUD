@@ -18,7 +18,7 @@ public class Querydragon extends MyConnexion {
 	}
 
 	void setTab(ArrayList<String> tab) {
-		this.tab = tab;
+		Querydragon.tab = tab;
 	}
 
 	static int getCounter() {
@@ -159,16 +159,17 @@ public class Querydragon extends MyConnexion {
 		tab=new ArrayList<>();
 		DatabaseMetaData databaseMetaData = accessDataBase.getMetaData();
 		ResultSet columns = databaseMetaData.getColumns(null,null, "dragons", null);
-		System.out.println(columns);
+		//System.out.println(columns);
 		while(columns.next()) {
 		String columnName = columns.getString("COLUMN_NAME");
 		tab.add(columnName);
 		}
-		List subtab=tab.subList(8,14);
-		 //tab=tab.subList(9,14);
-		setCounter(subtab.size());
-		for (int i=0;i<subtab.size();i++) {
-		System.out.println((i+1)+" : "+subtab.get(i));
+		for (int i=1;i<8;i++) { // remove the begining of the row name
+		 tab.remove(1);
+		}
+		setCounter(tab.size());
+		for (int i=1;i<tab.size();i++) {
+		System.out.println((i)+" : "+tab.get(i));
 		}
 	}
 }
