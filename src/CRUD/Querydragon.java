@@ -1,9 +1,7 @@
 package CRUD;
 
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,8 +34,8 @@ public class Querydragon extends MyConnexion {
 	 */
 	public static void readAll() {
 		try {
-			Statement declaration = accessDataBase.createStatement();
 			String query = "SELECT id_dragon,dragon FROM dragons;";
+			PreparedStatement declaration = accessDataBase.prepareStatement(query);
 			ResultSet resultat = declaration.executeQuery(query);
 			/* Récupération des données */
 			while (resultat.next()) {
@@ -45,7 +43,6 @@ public class Querydragon extends MyConnexion {
 				System.out.println(Arrays.toString(row));
 				setCounter(getCounter() + 1); //
 			}
-
 		} catch (Exception e) {
 			System.err.println("Erreur d'affichage d'ing: " + e.getMessage());
 		}
