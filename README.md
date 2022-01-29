@@ -1,2 +1,2 @@
 # CRUD
-request java ddb
+request java db
