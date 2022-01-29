@@ -5,12 +5,6 @@ import java.util.ArrayList;
 
 public class Display {
 
-	public static void main(String[] args) {
-		MyConnexion.openConnection();
-		displayAllDragon();
-
-	}
-
 	/**
 	 * Display all the dragon of the db in the console
 	 */
